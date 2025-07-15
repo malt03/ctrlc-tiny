@@ -9,16 +9,12 @@ A tiny crate for checking if Ctrl-C was pressed.
 No handlers to set. No threads.  
 Just call `init_ctrlc()` once, then check `is_ctrlc_received()` in your loop.
 
----
-
 ## ✨ Features
 
 - Signal-safe `SIGINT` handler
 - No threads, no allocations
 - Zero dependencies
 - Ideal for polling-based CLI tools
-
----
 
 ## 🚀 Usage
 
@@ -45,33 +41,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
----
-
 ## 🔍 Why not use `ctrlc`?
 
-[`ctrlc`](https://crates.io/crates/ctrlc) is powerful, but:
+[`ctrlc`](https://crates.io/crates/ctrlc) provides a flexible way to handle signals using closures and shared state.
 
-- Requires a handler closure and shared state
-- Spawns a thread and uses channels
+It spawns a thread and communicates through channels, which is great for many use cases but may be more than you need if you're just polling for Ctrl-C.
 
-If you just want a flag, `ctrlc-tiny` is simpler and smaller.
-
----
+`ctrlc-tiny` is focused on one job: setting a flag when `SIGINT` is received.
+No threads, no handlers, no extra logic.
 
 ## 🔒 Signal Safety
 
 - Internally uses a `volatile sig_atomic_t` flag — safe in POSIX signal handlers.
 - No heap, no threads — fully signal-safe by design.
 
----
-
 ## 🛠️ Platform Support
 
 - ✅ Linux
 - ✅ macOS
 - ❌ Windows
-
----
 
 ## 📦 License
 
