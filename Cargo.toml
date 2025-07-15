@@ -1,14 +1,22 @@
 [package]
 name = "ctrlc-tiny"
 version = "0.1.0"
-authors = ["Koji Murata <k@malt03.com>"]
-description = "A minimal signal-safe Ctrl-C flag for use in polling loops."
+description = "A tiny crate for checking if Ctrl-C was pressed, with no threads or handlers to set."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/malt03/ctrlc-tiny"
-keywords = ["ctrlc", "signal", "SIGINT", "tiny", "flag"]
+keywords = ["ctrlc", "signal", "SIGINT", "tiny", "signal-safe"]
 categories = ["command-line-utilities", "os"]
 documentation = "https://docs.rs/ctrlc-tiny"
 rust-version = "1.70"
+include = [
+    "/src/**",
+    "/c_src/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/LICENSE-APACHE",
+    "/LICENSE-MIT",
+    "/README.md",
+]
 
 [features]
 default = []

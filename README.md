@@ -1,19 +1,22 @@
 # ctrlc-tiny
 
-A tiny, signal-safe `Ctrl-C` flag for polling-based programs.  
-Designed to be minimal, fast, and portable — with no background threads or allocations.
+[![Crates.io Version](https://img.shields.io/crates/v/ctrlc-tiny)](https://crates.io/crates/ctrlc-tiny)
+[![docs.rs](https://img.shields.io/docsrs/ctrlc-tiny)](https://docs.rs/ctrlc-tiny)
+[![Test](https://github.com/malt03/ctrlc-tiny/actions/workflows/test.yml/badge.svg?event=release)](https://github.com/malt03/ctrlc-tiny/actions/workflows/test.yml)
 
-[![crates.io](https://img.shields.io/crates/v/ctrlc-tiny.svg)](https://crates.io/crates/ctrlc-tiny)
-[![docs.rs](https://docs.rs/ctrlc-tiny/badge.svg)](https://docs.rs/ctrlc-tiny)
+A tiny crate for checking if Ctrl-C was pressed.
+
+No handlers to set. No threads.  
+Just call `init_ctrlc()` once, then check `is_ctrlc_received()` in your loop.
 
 ---
 
 ## ✨ Features
 
-- ✅ Signal-safe handler for `SIGINT` (Ctrl-C)
-- ✅ No threads, no allocations
-- ✅ Zero dependencies (except `libc`)
-- ✅ Ideal for polling-style CLI programs
+- Signal-safe `SIGINT` handler
+- No threads, no allocations
+- Zero dependencies
+- Ideal for polling-based CLI tools
 
 ---
 
@@ -25,42 +28,40 @@ Add to your `Cargo.toml`:
 ctrlc-tiny = "0.1"
 ```
 
-In your code:
+Example:
 
 ```rust
-fn main() -> Result<(), std::io::Error> {
-ctrlc_tiny::init_ctrlc()?;
-
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    ctrlc_tiny::init_ctrlc()?;
     loop {
         if ctrlc_tiny::is_ctrlc_received() {
-            println!("Ctrl-C received!");
+            println!("Ctrl-C detected");
             break;
         }
-
-        // do some work...
+        // work...
     }
 
     Ok(())
-
 }
 ```
 
 ---
 
-## 🔍 Why not use the `ctrlc` crate?
+## 🔍 Why not use `ctrlc`?
 
-[`ctrlc`](https://crates.io/crates/ctrlc) is great, but:
+[`ctrlc`](https://crates.io/crates/ctrlc) is powerful, but:
 
-- It uses background threads and message channels
-- It isn't signal-safe in the strictest sense
-- This crate is simpler, smaller, and purely flag-based
+- Requires a handler closure and shared state
+- Spawns a thread and uses channels
+
+If you just want a flag, `ctrlc-tiny` is simpler and smaller.
 
 ---
 
-## 🔒 Safety Notes
+## 🔒 Signal Safety
 
-- The internal flag is backed by a `sig_atomic_t`
-- It is set exactly once per process lifetime and never reset
+- Internally uses a `volatile sig_atomic_t` flag — safe in POSIX signal handlers.
+- No heap, no threads — fully signal-safe by design.
 
 ---
 
@@ -68,8 +69,7 @@ ctrlc_tiny::init_ctrlc()?;
 
 - ✅ Linux
 - ✅ macOS
-- ✅ Unix-likes with `sigaction`
-- ❌ Windows (not yet supported)
+- ❌ Windows
 
 ---
 
@@ -77,7 +77,7 @@ ctrlc_tiny::init_ctrlc()?;
 
 Licensed under either of:
 
-- MIT License
-- Apache License 2.0
+- MIT
+- Apache 2.0
 
-See [LICENSE-MIT](LICENSE-MIT) or [LICENSE-APACHE](LICENSE-APACHE) for details.
+See [LICENSE-MIT](LICENSE-MIT) or [LICENSE-APACHE](LICENSE-APACHE).
