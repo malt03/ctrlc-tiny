@@ -13,7 +13,7 @@ Just call `init_ctrlc()` once, then check `is_ctrlc_received()` in your loop.
 
 - Signal-safe `SIGINT` handler
 - No threads, no allocations
-- Zero dependencies
+- Zero runtime dependencies
 - Ideal for polling-based CLI tools
 
 ## 🚀 Usage
