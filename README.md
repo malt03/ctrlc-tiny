@@ -6,7 +6,7 @@
 
 A tiny crate for checking if Ctrl-C was pressed.
 
-No handlers to set. No threads.  
+No handlers to set. No threads. No `AtomicBool`.  
 Just call `init_ctrlc()` once, then check `is_ctrlc_received()` in your loop.
 
 ## ✨ Features
@@ -27,8 +27,9 @@ ctrlc-tiny = "0.1"
 Example:
 
 ```rust
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() -> std::io::Result<()> {
     ctrlc_tiny::init_ctrlc()?;
+
     loop {
         if ctrlc_tiny::is_ctrlc_received() {
             println!("Ctrl-C detected");

@@ -1,7 +1,7 @@
-use std::io::{Write, stdout};
+use std::io::{stdout, Write};
 use std::{thread, time::Duration};
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() -> std::io::Result<()> {
     println!("probe started");
     stdout().flush()?;
 
