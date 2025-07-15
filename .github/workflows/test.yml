@@ -8,7 +8,6 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  LOCKFILE_PATH: Cargo.actions.lock
 
 jobs:
   build:
@@ -18,7 +17,9 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: 1.70.0
+      - name: Remove lockfile
+        run: rm Cargo.lock
       - name: Build
-        run: cargo build --verbose --lockfile-path ${{ env.LOCKFILE_PATH }}
+        run: cargo build --verbose
       - name: Run tests
-        run: cargo test --verbose --lockfile-path ${{ env.LOCKFILE_PATH }}
+        run: cargo test --verbose
