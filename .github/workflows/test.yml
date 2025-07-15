@@ -1,4 +1,4 @@
-name: Rust
+name: Test
 
 on:
   push:
@@ -14,10 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions-rs/toolchain
+      - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: 1.70.0
-          override: true
       - name: Build
         run: cargo build --verbose
       - name: Run tests
