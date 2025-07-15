@@ -1,5 +1,6 @@
 #include <signal.h>
 #include <stdatomic.h>
+#include <stddef.h>
 
 volatile sig_atomic_t is_sigint_received = 0;
 
