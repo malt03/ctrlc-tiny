@@ -11,7 +11,8 @@ fn e2e_test() {
     let child_id = child.id();
     let stdout = child.stdout.expect("failed to capture stdout");
     let mut reader = std::io::BufReader::new(stdout);
-    let mut last_line: String = String::new();
+    let mut lines = Vec::new();
+    let mut started = false;
 
     loop {
         let mut line = String::new();
@@ -19,9 +20,12 @@ fn e2e_test() {
             break;
         }
         let line = line.trim();
-        last_line = line.to_string();
-        if line == "probe started" {
-            thread::sleep(Duration::from_millis(50));
+        if started {
+            lines.push(line.to_string());
+        } else if line == "probe started" {
+            started = true;
+        }
+        if started {
             unsafe {
                 libc::kill(child_id as i32, libc::SIGINT);
             }
@@ -30,8 +34,8 @@ fn e2e_test() {
     }
 
     assert_eq!(
-        last_line.trim(),
-        "Ctrl-C detected",
+        lines,
+        vec!["Ctrl-C detected: 1", "Ctrl-C detected: 2",],
         "Expected Ctrl-C detection in child output"
     );
 }

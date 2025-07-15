@@ -31,6 +31,7 @@ fn main() -> Result<(), Error> {
         .header("c_src/sigint.h")
         .allowlist_function("init_sigint_handler")
         .allowlist_function("get_is_sigint_received")
+        .allowlist_function("reset_is_sigint_received")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .generate()?;
 

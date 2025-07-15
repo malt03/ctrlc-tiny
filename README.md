@@ -42,6 +42,8 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
+Need to detect Ctrl-C more than once? See [`examples/multi_ctrlc.rs`](https://github.com/malt03/ctrlc-tiny/blob/main/examples/multi_ctrlc.rs).
+
 ## 🔍 Why not use `ctrlc`?
 
 [`ctrlc`](https://crates.io/crates/ctrlc) provides a flexible way to handle signals using closures and shared state.
@@ -55,6 +57,7 @@ No threads, no handlers, no extra logic.
 
 - Internally uses a `volatile sig_atomic_t` flag — safe in POSIX signal handlers.
 - No heap, no threads — fully signal-safe by design.
+- The flag can be reset via `reset_ctrlc_received()`, but may race with the signal handler if SIGINT is received at the same time.
 
 ## 🛠️ Platform Support
 

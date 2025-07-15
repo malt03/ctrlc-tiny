@@ -68,6 +68,39 @@ pub fn is_ctrlc_received() -> bool {
     unsafe { bindings::get_is_sigint_received() != 0 }
 }
 
+/// Resets the internal Ctrl-C received flag to `false`.
+///
+/// This can be useful if you want to detect multiple Ctrl-C presses
+/// independently (e.g. "exit on second Ctrl-C").
+///
+/// # Safety
+///
+/// Internally, this clears a `sig_atomic_t` flag that may be concurrently
+/// modified by the signal handler. This is safe but may cause a signal
+/// received during the reset to be missed.
+///
+/// # Examples
+///
+/// ```rust,no_run
+/// ctrlc_tiny::init_ctrlc()?;
+/// let mut count = 0;
+/// loop {
+///     if ctrlc_tiny::is_ctrlc_received() {
+///         ctrlc_tiny::reset_ctrlc_received();
+///         count += 1;
+///         if count == 2 {
+///             break;
+///         }
+///     }
+/// }
+/// # Ok::<_, std::io::Error>(())
+/// ```
+pub fn reset_ctrlc_received() {
+    unsafe {
+        bindings::reset_is_sigint_received();
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -80,6 +113,8 @@ mod tests {
 
     #[test]
     fn is_ctrlc_received_initially_false() {
+        assert!(!is_ctrlc_received());
+        reset_ctrlc_received();
         assert!(!is_ctrlc_received());
     }
 }

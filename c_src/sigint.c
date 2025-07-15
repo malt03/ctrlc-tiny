@@ -23,3 +23,8 @@ sig_atomic_t get_is_sigint_received()
 {
     return is_sigint_received;
 }
+
+void reset_is_sigint_received()
+{
+    is_sigint_received = 0;
+}
