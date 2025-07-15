@@ -13,7 +13,7 @@ Just call `init_ctrlc()` once, then check `is_ctrlc_received()` in your loop.
 
 - Signal-safe `SIGINT` handler
 - No threads, no allocations
-- Zero runtime dependencies
+- No runtime Rust dependencies
 - Ideal for polling-based CLI tools
 
 ## 🚀 Usage
@@ -46,12 +46,11 @@ Need to detect Ctrl-C more than once? See [`examples/multi_ctrlc.rs`](https://gi
 
 ## 🔍 Why not use `ctrlc`?
 
-[`ctrlc`](https://crates.io/crates/ctrlc) provides a flexible way to handle signals using closures and shared state.
+[`ctrlc`](https://crates.io/crates/ctrlc) is great when you want to run custom logic when Ctrl-C is pressed.
 
-It spawns a thread and communicates through channels, which is great for many use cases but may be more than you need if you're just polling for Ctrl-C.
+But if you just want to check whether Ctrl-C was pressed, it can feel more involved than necessary.
 
-`ctrlc-tiny` is focused on one job: setting a flag when `SIGINT` is received.
-No threads, no handlers, no extra logic.
+`ctrlc-tiny` keeps things simple: a single flag you can poll.
 
 ## 🔒 Signal Safety
 
@@ -63,7 +62,7 @@ No threads, no handlers, no extra logic.
 
 - ✅ Linux
 - ✅ macOS
-- ❌ Windows
+- ❌ Windows (no plans to add support)
 
 ## 📦 License
 
