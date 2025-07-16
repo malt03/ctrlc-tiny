@@ -64,6 +64,13 @@ But if you just want to check whether Ctrl-C was pressed, it can feel more invol
 - ✅ macOS
 - ❌ Windows (no plans to add support)
 
+## 📝 Note
+
+Honestly, `Arc`, `AtomicBool`, and even the internals of the `ctrlc` crate don't pose any real-world performance issues.
+
+This crate was created to scratch a personal itch — to get rid of a subjective sense of overkill and a bit of boilerplate.  
+In that sense, I’m quite happy with how this crate turned out.
+
 ## 📦 License
 
 Licensed under either of:
