@@ -1,17 +1,30 @@
 #include <signal.h>
+#include <string.h>
 #include <stdatomic.h>
 #include <stddef.h>
+#include <unistd.h>
 
 volatile sig_atomic_t is_sigint_received = 0;
+const char *sigint_message = NULL;
+size_t sigint_message_size = 0;
 
 void handle_sigint(int signo)
 {
     (void)signo;
     is_sigint_received = 1;
+    if (sigint_message)
+    {
+        write(STDERR_FILENO, sigint_message, sigint_message_size);
+    }
 }
 
-int init_sigint_handler()
+int init_sigint_handler(const char *message)
 {
+    if (message)
+    {
+        sigint_message = message;
+        sigint_message_size = strlen(sigint_message);
+    }
     struct sigaction sa = {0};
     sa.sa_handler = handle_sigint;
     sigemptyset(&sa.sa_mask);

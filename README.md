@@ -28,13 +28,9 @@ Example:
 
 ```rust
 fn main() -> std::io::Result<()> {
-    ctrlc_tiny::init_ctrlc()?;
+    ctrlc_tiny::init_ctrlc_with_print("Ctrl+C pressed\n")?;
 
-    loop {
-        if ctrlc_tiny::is_ctrlc_received() {
-            println!("Ctrl-C detected");
-            break;
-        }
+    while !ctrlc_tiny::is_ctrlc_received() {
         // work...
     }
 

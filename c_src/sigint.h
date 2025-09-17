@@ -3,7 +3,7 @@
 
 #include <signal.h>
 
-int init_sigint_handler(void);
+int init_sigint_handler(const char *message);
 sig_atomic_t get_is_sigint_received(void);
 void reset_is_sigint_received(void);
 
