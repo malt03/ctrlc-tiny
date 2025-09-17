@@ -4,7 +4,7 @@ use std::{thread, time::Duration};
 fn main() -> std::io::Result<()> {
     ctrlc_tiny::init_ctrlc()?;
 
-    println!("probe started");
+    println!("e2e_init_ctrlc started");
     stdout().flush()?;
 
     let mut count = 0;
