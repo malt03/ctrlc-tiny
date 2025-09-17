@@ -4,7 +4,7 @@
 //! by resetting the internal flag after each detection.
 
 fn main() -> std::io::Result<()> {
-    ctrlc_tiny::init_ctrlc()?;
+    ctrlc_tiny::init_ctrlc(None)?;
 
     let mut count = 0;
     loop {

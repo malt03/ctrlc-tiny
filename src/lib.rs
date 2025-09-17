@@ -1,6 +1,6 @@
 mod bindings;
 
-use std::{io, sync::Once};
+use std::{ffi, io, mem, sync::Once};
 
 static INIT: Once = Once::new();
 
@@ -32,10 +32,18 @@ static INIT: Once = Once::new();
 /// }
 /// # Ok::<_, std::io::Error>(())
 /// ```
-pub fn init_ctrlc() -> io::Result<()> {
+pub fn init_ctrlc(message: Option<&str>) -> io::Result<()> {
     let mut result = Ok(());
     INIT.call_once(|| unsafe {
-        if bindings::init_sigint_handler() != 0 {
+        let message = if let Some(message) = message {
+            let c_string = ffi::CString::new(message).unwrap();
+            let ptr = c_string.as_ptr();
+            mem::forget(c_string);
+            ptr
+        } else {
+            std::ptr::null()
+        };
+        if bindings::init_sigint_handler(message) != 0 {
             result = Err(io::Error::last_os_error());
         }
     });
@@ -107,8 +115,8 @@ mod tests {
 
     #[test]
     fn init_ctrlc_should_succeed_and_be_idempotent() {
-        assert!(init_ctrlc().is_ok());
-        assert!(init_ctrlc().is_ok());
+        assert!(init_ctrlc(None).is_ok());
+        assert!(init_ctrlc(None).is_ok());
     }
 
     #[test]
