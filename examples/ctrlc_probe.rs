@@ -2,7 +2,7 @@ use std::io::{stdout, Write};
 use std::{thread, time::Duration};
 
 fn main() -> std::io::Result<()> {
-    ctrlc_tiny::init_ctrlc(None)?;
+    ctrlc_tiny::init_ctrlc()?;
 
     println!("probe started");
     stdout().flush()?;

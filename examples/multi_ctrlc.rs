@@ -4,7 +4,7 @@
 //! by resetting the internal flag after each detection.
 
 fn main() -> std::io::Result<()> {
-    ctrlc_tiny::init_ctrlc(Some("Ctrl-C detected"))?;
+    ctrlc_tiny::init_ctrlc_with_print("Ctrl-C detected")?;
 
     let mut count = 0;
     loop {
