@@ -21,7 +21,7 @@ Just call `init_ctrlc()` once, then check `is_ctrlc_received()` in your loop.
 Add to your `Cargo.toml`:
 
 ```toml
-ctrlc-tiny = "0.1"
+ctrlc-tiny = "0.2"
 ```
 
 Example:
