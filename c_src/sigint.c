@@ -15,7 +15,6 @@ void handle_sigint(int signo)
     if (sigint_message)
     {
         write(STDERR_FILENO, sigint_message, sigint_message_size);
-        write(STDERR_FILENO, "\n", 1);
     }
 }
 
