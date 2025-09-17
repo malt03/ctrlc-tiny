@@ -1,4 +1,9 @@
-use std::{io::{BufRead, Read}, process::Command, thread, time::Duration};
+use std::{
+    io::{BufRead, Read},
+    process::Command,
+    thread,
+    time::Duration,
+};
 
 #[test]
 fn e2e_init_ctrlc_test() {
@@ -59,7 +64,11 @@ fn e2e_init_ctrlc_with_print_test() {
 
     loop {
         let mut line = String::new();
-        if stdout_reader.read_line(&mut line).expect("failed to read line") == 0 {
+        if stdout_reader
+            .read_line(&mut line)
+            .expect("failed to read line")
+            == 0
+        {
             break;
         }
         let line = line.trim();
@@ -75,7 +84,9 @@ fn e2e_init_ctrlc_with_print_test() {
     }
 
     let mut stderr_content = String::new();
-    stderr_reader.read_to_string(&mut stderr_content).expect("failed to read stderr");
+    stderr_reader
+        .read_to_string(&mut stderr_content)
+        .expect("failed to read stderr");
 
     assert_eq!(
         stdout_lines,

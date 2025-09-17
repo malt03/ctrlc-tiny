@@ -9,7 +9,7 @@ fn main() -> std::io::Result<()> {
     while !ctrlc_tiny::is_ctrlc_received() {
         std::thread::sleep(std::time::Duration::from_millis(50));
     }
-    
+
     println!("Finished");
     stdout().flush()?;
 
