@@ -1,6 +1,6 @@
 [package]
 name = "ctrlc-tiny"
-version = "0.2.0"
+version = "1.0.0"
 edition = "2021"
 rust-version = "1.70"
 description = "A tiny crate for checking if Ctrl-C was pressed — no handlers, no AtomicBool."
