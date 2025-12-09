@@ -2,7 +2,7 @@
 name = "ctrlc-tiny"
 version = "1.0.0"
 edition = "2021"
-rust-version = "1.70"
+rust-version = "1.71"
 description = "A tiny crate for checking if Ctrl-C was pressed — no handlers, no AtomicBool."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/malt03/ctrlc-tiny"
